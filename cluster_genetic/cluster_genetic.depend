@@ -1,0 +1,53 @@
+# depslib dependency file v1.0
+1485020644 source:/home/alexander/cproj/cluster_genetic/core.cpp
+	<iostream>
+	<iomanip>
+	<vector>
+	<fstream>
+	<boost/mpi.hpp>
+	"genetic_set.hpp"
+	"communication.hpp"
+
+1483366522 /home/alexander/cproj/cluster_genetic/genetic_set.hpp
+	"math.hpp"
+	"gene.hpp"
+	"log.hpp"
+
+1483384106 /home/alexander/cproj/cluster_genetic/math.hpp
+	<boost/multiprecision/cpp_int.hpp>
+	<boost/multiprecision/detail/default_ops.hpp>
+	<boost/multiprecision/detail/et_ops.hpp>
+	<boost/multiprecision/detail/number_base.hpp>
+	<boost/multiprecision/detail/number_compare.hpp>
+	<boost/multiprecision/number.hpp>
+	<boost/multiprecision/random.hpp>
+	<boost/random/independent_bits.hpp>
+	<boost/random/mersenne_twister.hpp>
+	<boost/random/uniform_int_distribution.hpp>
+	<boost/lexical_cast.hpp>
+	"config.hpp"
+
+1483297873 /home/alexander/cproj/cluster_genetic/config.hpp
+	<string>
+	<iterator>
+	<boost/multiprecision/cpp_int.hpp>
+	<boost/multiprecision/cpp_dec_float.hpp>
+
+1483286623 /home/alexander/cproj/cluster_genetic/gene.hpp
+	<iterator>
+	<algorithm>
+	"config.hpp"
+
+1485020712 /home/alexander/cproj/cluster_genetic/log.hpp
+	<string>
+	<iterator>
+	<cerrno>
+	<ctime>
+	<cstring>
+
+1483301652 /home/alexander/cproj/cluster_genetic/communication.hpp
+	<boost/multiprecision/cpp_int/serialize.hpp>
+	<boost/serialization/vector.hpp>
+	<boost/serialization/string.hpp>
+	"genetic_set.hpp"
+

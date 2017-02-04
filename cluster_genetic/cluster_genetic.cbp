@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="cluster_genetic" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/cluster_genetic" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/cluster_genetic" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-O3" />
+			<Add option="-Wall" />
+			<Add option="-I/usr/lib/openmpi/include" />
+			<Add option="-I/usr/lib/openmpi/include/openmpi" />
+			<Add option="-pthread" />
+			<Add option="-fopenmp" />
+			<Add option="-std=c++14" />
+			<Add option="-ftemplate-backtrace-limit=0" />
+		</Compiler>
+		<Linker>
+			<Add option="-L/usr//lib" />
+			<Add option="-L/usr/lib/openmpi/lib" />
+			<Add option="-lmpi_cxx" />
+			<Add option="-lmpi" />
+			<Add option="-ldl" />
+			<Add option="-lhwloc" />
+			<Add option="-lboost_mpi" />
+			<Add option="-lboost_serialization" />
+		</Linker>
+		<Unit filename="communication.hpp" />
+		<Unit filename="config.hpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="core.cpp" />
+		<Unit filename="gene.hpp" />
+		<Unit filename="genetic_set.hpp" />
+		<Unit filename="log.hpp" />
+		<Unit filename="math.hpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Extensions>
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project project_number="0.1" />
+				<doxyfile_build extract_all="1" extract_static="1" />
+				<doxyfile_warnings warn_if_undocumented="1" />
+				<doxyfile_output latex="1" />
+				<doxyfile_preprocessor enable_preprocessing="0" />
+				<doxyfile_dot class_diagrams="1" />
+				<general />
+			</DoxyBlocks>
+			<envvars />
+			<code_completion />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

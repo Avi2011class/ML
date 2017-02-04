@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1483888329 source:/home/alexander/cproj/TSPannealing/core.cpp
+	<iostream>
+	<vector>
+	<set>
+	<iterator>
+	<algorithm>
+	<functional>
+	<cmath>
+	<fstream>
+	<ctime>
+	<random>
+	<sstream>
+	<cstring>
+

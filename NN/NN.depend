@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1485962366 source:/home/alexander/cproj/NN/main.cpp
+	<iostream>
+	<fstream>
+	"neural.hpp"
+
+1485962407 /home/alexander/cproj/NN/neural.hpp
+	<functional>
+	<vector>
+	<iostream>
+	<string>
+	<cmath>
+	<ctime>
+	<set>
+	<iterator>
+	<algorithm>
+	<random>
+	<numeric>
+	<exception>
+	<iomanip>
+

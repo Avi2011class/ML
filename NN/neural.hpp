@@ -15,6 +15,9 @@
 #include <exception>
 #include <iomanip>
 
+
+#define ALPHA 0.5
+
 class Neuron
 {
 public:
@@ -28,14 +31,17 @@ public:
 	{
 	};
 
+	// Activation function of neuron
 	static inline double activationFunction(double arg)
 	{
-		return 1 / (1 + exp(-arg)) + 0.01 * arg;
+		return 1 / (1 + exp(-arg * ALPHA));
 	}
+
+	// Derivative of activation function to backtrace
 	static inline double derivativeFunction(double arg)
 	{
-		double ex = exp(arg);
-		return ex / (1 + ex) / (1 + ex) + 0.01;
+		double ex = exp(arg * ALPHA);
+		return ex / (1 + ex) / (1 + ex) * ALPHA;
 	}
     Neuron(int argInputCount) : inputCount(argInputCount)
     {
@@ -43,7 +49,7 @@ public:
 
 		std::random_device rd;
 		std::mt19937 randomGenerator(rd());
-        std::uniform_real_distribution< double > defaultDistribution(-0.2, 0.2);
+        std::uniform_real_distribution< double > defaultDistribution(-0.5, 0.5);
         std::function< double() > weightGenerator = [&defaultDistribution, &randomGenerator]() -> double
 															{ return defaultDistribution(randomGenerator); };
         std::generate_n(std::back_inserter(inputWeight), inputCount, weightGenerator);
@@ -57,7 +63,6 @@ public:
 
         double summarWeight = std::inner_product(inputWeight.begin(), inputWeight.end(), inputData.begin(), fictiveWeight);
         inputCache = summarWeight;
-
         outputCache = activationFunction(summarWeight);
         return outputCache;
     }
@@ -136,57 +141,56 @@ public:
 
 		std::vector< double > previousErrors;
 		std::vector< double > previousErrorsBuffer;
+		std::vector< double > previousTransactions;
 
         for(int i = layerCount - 1; i >= 0; i--) {
 			// cache for errors transactions
 			previousErrorsBuffer.assign(  	(i > 0) ? layerSize[i - 1] : inputSize , 0);
 
 			//cache for layers input
-			std::vector< double > previousTransactions;
+			previousTransactions.clear();
 			if (i > 0)
 				for (int j = 0; j < layerSize[i - 1]; j++)
 					previousTransactions.push_back(Neurons[i - 1][j].outputCache);
 			else
 				previousTransactions = inputCache;
 
-
 			// if final layer
 			if (i == layerCount - 1) {
+				#pragma omp parallel for
 				for (int j = 0; j < layerSize[i]; j++) {
-					double sigmaError = (correctOutput[i] - Neurons[i][j].outputCache) *
-										Neuron::derivativeFunction(Neurons[i][j].inputCache);
-					std::cout << "SE: " << sigmaError << "; ";
-                    for(int from = 0; from < previousTransactions.size(); from++) {
+					double outputCacheTmp = Neurons[i][j].outputCache;
+					double sigmaError = (correctOutput[j] - Neurons[i][j].outputCache) *
+													(outputCacheTmp) * (1 - outputCacheTmp) * ALPHA;
+
+                    for(size_t from = 0; from < previousTransactions.size(); from++) {
 						double dw = previousTransactions[from] * sigmaError * alpha;
 
 						previousErrorsBuffer[from] += sigmaError * Neurons[i][j].inputWeight[from];
 						Neurons[i][j].inputWeight[from] += dw;
-
-						std::cout << "dw[" << from << "]=" << dw << "; ";
                     }
-                    std::cout << "fw=" << sigmaError * alpha << "; " << std::endl;
                     Neurons[i][j].fictiveWeight += sigmaError * alpha;
 				}
+				previousErrors = previousErrorsBuffer;
 			}
 			// middle layers
 			else {
+				#pragma omp parallel for
 				for (int j = 0; j < layerSize[i]; j++) {
-					double sigmaError = previousErrors[j] *
-										Neuron::derivativeFunction(Neurons[i][j].inputCache);
-					std::cout << "SE: " << sigmaError << "; ";
-                    for(int from = 0; from < previousTransactions.size(); from++) {
+
+					double outputCacheTmp = Neurons[i][j].outputCache;
+					double sigmaError = previousErrors[j] * (outputCacheTmp) * (1 - outputCacheTmp) * ALPHA;
+
+                    for(size_t from = 0; from < previousTransactions.size(); from++) {
 						double dw = previousTransactions[from] * sigmaError * alpha;
 
 						previousErrorsBuffer[from] += sigmaError * Neurons[i][j].inputWeight[from];
 						Neurons[i][j].inputWeight[from] += dw;
-
-						std::cout << "dw[" << from << "]=" << dw << "; ";
                     }
-                    std::cout << "fw=" << sigmaError * alpha << "; " << std::endl;
                     Neurons[i][j].fictiveWeight += sigmaError * alpha;
 				}
+				previousErrors = previousErrorsBuffer;
 			}
-			previousErrors = previousErrorsBuffer;
         }
 	}
 

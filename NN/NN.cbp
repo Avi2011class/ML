@@ -37,7 +37,10 @@
 		</Compiler>
 		<Linker>
 			<Add library="gomp" />
+			<Add library="sfml-graphics" />
 		</Linker>
+		<Unit filename="bmp.hpp" />
+		<Unit filename="gnuplot.gnu" />
 		<Unit filename="main.cpp" />
 		<Unit filename="neural.hpp" />
 		<Extensions>

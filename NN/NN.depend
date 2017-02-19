@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1485962366 source:/home/alexander/cproj/NN/main.cpp
+1487457743 source:/home/alexander/cproj/NN/main.cpp
 	<iostream>
 	<fstream>
 	"neural.hpp"
+	"bmp.hpp"
 
-1485962407 /home/alexander/cproj/NN/neural.hpp
+1487454672 /home/alexander/cproj/NN/neural.hpp
 	<functional>
 	<vector>
 	<iostream>
@@ -18,4 +19,17 @@
 	<numeric>
 	<exception>
 	<iomanip>
+
+1487457997 /home/alexander/cproj/NN/bmp.hpp
+	<cstdint>
+	<string>
+	<exception>
+	<cstdio>
+	<cstdlib>
+	<algorithm>
+	<vector>
+	<set>
+	<SFML/Graphics.hpp>
+	<SFML/Graphics/Color.hpp>
+	"neural.hpp"
 
